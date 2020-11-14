@@ -1,6 +1,7 @@
 package com.example.myschool
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myschool.data.model.*
+import com.example.myschool.data.utils.TimeSet
+import com.example.myschool.data.utils.uploadUtilsData
 import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        uploadUtilsData()
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -28,8 +32,26 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        for (i in 1..6){
+            Log.e("TESTEST", "${(i-1)%6} ${(i+6-1)%6}")
+        }
+        //val firebaseDatabase = FirebaseDatabase.getInstance()
         /*
-        val firebaseDatabase = FirebaseDatabase.getInstance()
+        firebaseDatabase.getReference("utils").child("timeSet")
+                .setValue(listOf(
+                        TimeSet("8:00", "8:45"),
+                        TimeSet("8:55", "9:40"),
+                        TimeSet("9:55", "10:40"),
+                        TimeSet("10:55", "11:40"),
+                        TimeSet("11:50", "12:35"),
+                        TimeSet("12:45", "13:30"),
+                        TimeSet("13:40", "14:25"),
+                        TimeSet("14:35", "15:20")
+                ))
+
+         */
+        /*
+
         val teacherIds = mutableListOf<String>()
 
         for (i in 1..10) {
@@ -70,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             for (d in 1..6) {
                 val lessons = mutableListOf<Lesson>()
                 val skip = (0..2).random()
-                for (l in 1..8) {
+                for (l in 1..6) {
 
                     val lesson = Lesson(
                         l+skip,

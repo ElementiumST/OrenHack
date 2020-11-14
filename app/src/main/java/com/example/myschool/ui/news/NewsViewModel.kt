@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myschool.data.model.Post
+import com.example.myschool.data.utils.firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -16,7 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
 class NewsViewModel : ViewModel() {
-    private val newsReference = FirebaseDatabase.getInstance().getReference("news")
+    private val newsReference = firebase.getReference("news")
     private val newsStorage = FirebaseStorage.getInstance().getReference("news")
     val newsList = MutableLiveData<List<Post>>()
     init {

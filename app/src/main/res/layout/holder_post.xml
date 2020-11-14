@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/test_image_for_post" />
+            app:srcCompat="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/text"
