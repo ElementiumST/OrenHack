@@ -10,9 +10,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myschool.data.model.*
+import com.example.myschool.data.model.alalytics.Analytics
+import com.example.myschool.data.model.alalytics.Appraisal
+import com.example.myschool.data.model.alalytics.Journal
 import com.example.myschool.data.utils.TimeSet
+import com.example.myschool.data.utils.firebaseDatabase
 import com.example.myschool.data.utils.uploadUtilsData
-import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,11 +35,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        for (i in 1..6){
-            Log.e("TESTEST", "${(i-1)%6} ${(i+6-1)%6}")
-        }
-        //val firebaseDatabase = FirebaseDatabase.getInstance()
-        /*
+        viewModel.uploadData("-MM7fvCKgnVEDvqbvt8J", "0")
+                /*
         firebaseDatabase.getReference("utils").child("timeSet")
                 .setValue(listOf(
                         TimeSet("8:00", "8:45"),
@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
                         TimeSet("14:35", "15:20")
                 ))
 
-         */
-        /*
+
+
 
         val teacherIds = mutableListOf<String>()
 
@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
             val ref = firebaseDatabase.getReference("disciplines").child("Дисциплина ${i}")
             disciplineIds.add(ref.key!!)
             ref.setValue(Discipline(
-                    teacherIds[(1 until teacherIds.size).random()],
                     "Дисциплина ${i}"
             ))
 
@@ -78,13 +77,43 @@ class MainActivity : AppCompatActivity() {
         for(i in 1..11) {
             val ref = firebaseDatabase.getReference("groups").push()
             val students = mutableListOf<Student>()
+            val journals = mutableListOf<Journal>()
+            for (discipline in disciplineIds) {
+                for(fourth in 1..4) {
+                    val appraisals = mutableListOf<Appraisal>()
+                    for(appraisalNum in 0..(3..10).random()) {
+                        appraisals.add(
+                            Appraisal(
+                                (2..5).random(),
+                                (1583153920000..1622465920000).random(),
+                                "Причина ${(0..10).random()}"
+                            )
+                        )
+                    }
+                    val journal = Journal(
+                        fourth/2,
+                        fourth,
+                        discipline,
+                        appraisals
+
+                    )
+                    journals.add(journal)
+                }
+            }
+
+            val analytics = Analytics(
+                journals
+            )
+
             for(j in 1..24) {
                 val student = Student(
                         "Имя ${j}",
                         "Фамилия ${j}",
                         "Отчество ${j}",
                         (6..8).random()+i,
-                        (0..1).random()
+                        (0..1).random(),
+                        analytics
+
                 )
                 students.add(student)
             }
@@ -100,7 +129,8 @@ class MainActivity : AppCompatActivity() {
                             "Тема урока ${d}.${l}",
                             "Домашнее задание урока ${d}.${l}",
                             (0..15).random().toString(),
-                            teacherIds[(1 until teacherIds.size).random()]
+                            teacherIds[(1 until teacherIds.size).random()],
+                            "Комментарий к уроку ${l}"
                     )
                     lessons.add(lesson)
                 }
@@ -120,6 +150,8 @@ class MainActivity : AppCompatActivity() {
             ref.setValue(group)
         }
 
-         */
+                 */
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.example.myschool.ui.shedule
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.example.myschool.R
 import com.example.myschool.data.model.Lesson
+import com.example.myschool.ui.shedule.sheduleActivity.ScheduleActivity
 
 
 class ScheduleFragment : Fragment() {
@@ -40,6 +42,9 @@ class ScheduleFragment : Fragment() {
         return root
     }
     private fun clickOnLesson(lesson: Lesson) {
+        val intent = Intent(requireActivity(), ScheduleActivity::class.java)
+        intent.putExtra("data", lesson)
+        startActivity(intent)
     }
 
 }

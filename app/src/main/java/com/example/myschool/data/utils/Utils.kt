@@ -1,19 +1,12 @@
 package com.example.myschool.data.utils
 
-import android.annotation.SuppressLint
-import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
+import com.example.myschool.data.model.alalytics.Appraisal
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.ReplaySubject
-import java.sql.Time
 import java.util.*
 
 private val calendar = Calendar.getInstance()
@@ -45,7 +38,6 @@ data class TimeSet(
         val timeStart: String = "",
         val timeEnd: String = ""
 )
-private val firebaseDatabase = FirebaseDatabase.getInstance()
 fun uploadUtilsData() {
     firebaseDatabase.getReference("utils").child("timeSet").addListenerForSingleValueEvent(listener)
 }
@@ -90,4 +82,12 @@ fun dayNumToTitle(date: Int): String {
         else -> "N/A"
     }
 }
-val firebase = FirebaseDatabase.getInstance().also { it.setPersistenceEnabled(true) }
+val firebaseDatabase = FirebaseDatabase.getInstance().also { it.setPersistenceEnabled(true) }
+fun getAppraisalByList(list: List<Appraisal>): Float {
+    var sum = 0.0f
+    for (item in list) {
+        sum += item.value
+    }
+    sum /= list.size
+    return sum
+}

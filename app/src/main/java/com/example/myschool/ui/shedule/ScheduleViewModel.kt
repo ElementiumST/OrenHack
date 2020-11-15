@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myschool.data.model.Day
-import com.example.myschool.data.utils.firebase
+import com.example.myschool.data.utils.firebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class ScheduleViewModel: ViewModel() {
@@ -19,7 +18,7 @@ class ScheduleViewModel: ViewModel() {
             }
         }
     }
-    private val database = firebase.getReference("groups")
+    private val database = firebaseDatabase.getReference("groups")
     val schedule = MutableLiveData<List<Day>>()
     lateinit var groupId: String
     fun startUploadData(groupId: String) {

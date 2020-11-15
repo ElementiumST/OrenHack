@@ -17,7 +17,9 @@
         android:theme="@style/Theme.MySchool"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.news.NewsInfoActivity"></activity>
+        <activity android:name=".ui.diary.DiaryActivity"></activity>
+        <activity android:name=".ui.shedule.sheduleActivity.ScheduleActivity" />
+        <activity android:name=".ui.news.NewsInfoActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
