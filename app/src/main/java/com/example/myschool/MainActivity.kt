@@ -10,6 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myschool.data.model.*
+import com.example.myschool.data.model.accounts.Account
+import com.example.myschool.data.model.accounts.StudentAccount
 import com.example.myschool.data.model.alalytics.Analytics
 import com.example.myschool.data.model.alalytics.Appraisal
 import com.example.myschool.data.model.alalytics.Journal
@@ -25,9 +27,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         uploadUtilsData()
         setContentView(R.layout.activity_main)
-
+        val account = intent.getSerializableExtra("account") as Account
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.uploadData("-MMAYvEdYdHO0prpnMZF", "0")
+        if(account.accountType == 0) {
+            val studentAccount = account as StudentAccount
+            viewModel.uploadData(studentAccount.groupId, studentAccount.studentId)
+        }
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 

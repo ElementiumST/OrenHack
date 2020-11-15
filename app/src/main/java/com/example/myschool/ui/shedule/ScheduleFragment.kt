@@ -32,12 +32,12 @@ class ScheduleFragment : Fragment() {
             viewModel = ScheduleViewModel.buildModel(this, it)
             val dayContainer = root.findViewById<FrameLayout>(R.id.dayContainer)
             val paginationView = root.findViewById<PaginationView>(R.id.pagination)
-            viewModel.schedule.observe(viewLifecycleOwner) {
+            viewModel.schedule.observe(viewLifecycleOwner) { schedule ->
                 if(it.isEmpty()) return@observe
-                paginationView.setData(it.size) { from: Int, to: Int ->
+                paginationView.setData(schedule.size) { from: Int, to: Int ->
                     val dayView = DayView(requireContext())
                     dayContainer.removeAllViews()
-                    dayView.setDataSource(it[to], this::clickOnLesson)
+                    dayView.setDataSource(schedule[to], this::clickOnLesson)
                     dayContainer.addView(dayView)
                 }
             }
