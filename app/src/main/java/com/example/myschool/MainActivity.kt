@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         if(account.accountType == 0) {
             val studentAccount = account as StudentAccount
-            viewModel.uploadData(studentAccount.groupId, studentAccount.studentId)
+            viewModel.uploadData(studentAccount)
         }
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_news, R.id.navigation_schedule, R.id.navigation_blog))
+                R.id.navigation_news, R.id.navigation_schedule, R.id.navigation_blog, R.id.navigation_analytics))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 

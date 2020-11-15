@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.myschool.data.model.Student
 import com.example.myschool.data.model.accounts.StudentAccount
 import com.example.myschool.data.utils.firebaseDatabase
@@ -33,8 +34,10 @@ class LoginActivity : AppCompatActivity() {
                                     intent.putExtra("account", item.getValue(StudentAccount::class.java)!!)
                                     setResult(RESULT_OK, intent)
                                     finish()
+                                    return
                                 }
                             }
+                        Toast.makeText(this@LoginActivity, "Пользователь не найден", Toast.LENGTH_LONG).show()
                     }
 
                     override fun onCancelled(error: DatabaseError) {

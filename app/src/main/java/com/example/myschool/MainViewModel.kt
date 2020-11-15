@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myschool.data.model.Post
 import com.example.myschool.data.model.Student
+import com.example.myschool.data.model.accounts.StudentAccount
 import com.example.myschool.data.model.alalytics.Analytics
 import com.example.myschool.data.model.alalytics.Journal
 import com.example.myschool.data.utils.firebaseDatabase
@@ -15,12 +16,19 @@ import com.google.firebase.database.ValueEventListener
 class MainViewModel : ViewModel() {
     val student = MutableLiveData<Student>()
     val groupId = MutableLiveData<String>()
-    fun uploadData(groupId: String, studentId: String) {
+    fun uploadData(studentAccount: StudentAccount) {
+        val groupId: String = studentAccount.groupId
+        val studentId: String = studentAccount.studentId
         this.groupId.postValue(groupId)
         firebaseDatabase.getReference("groups").child(groupId).child("students").child(studentId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    student.postValue(snapshot.getValue(Student::class.java))
+                    student.postValue(snapshot.getValue(Student::class.java).apply {
+                        this!!.reference = firebaseDatabase.getReference("groups")
+                            .child(groupId)
+                            .child("students")
+                            .child(studentId)
+                    })
                 }
 
                 override fun onCancelled(error: DatabaseError) {

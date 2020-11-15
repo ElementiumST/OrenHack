@@ -19,9 +19,5 @@
         android:id="@+id/navigation_analytics"
         android:icon="@drawable/ic_analytics"
         android:title="@string/title_analytics" />
-    <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_user"
-            android:title="@string/title_profile" />
 
 </menu>
