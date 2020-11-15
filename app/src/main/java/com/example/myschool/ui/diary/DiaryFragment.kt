@@ -36,7 +36,7 @@ class DiaryFragment: Fragment() {
                 view.setOnClickListener {
                     val intent = Intent(requireContext(), DiaryActivity::class.java)
                     intent.putExtra("data", journal.value.toTypedArray())
-                    //startActivity(intent)
+                    startActivity(intent)
                 }
             }
 

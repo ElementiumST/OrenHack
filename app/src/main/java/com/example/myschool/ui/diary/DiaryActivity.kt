@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.myschool.R
 import com.example.myschool.data.model.alalytics.Journal
+import com.example.myschool.data.utils.getDateString
 import com.example.myschool.view.InfoCardView
 
 class DiaryActivity : AppCompatActivity() {
@@ -16,8 +17,14 @@ class DiaryActivity : AppCompatActivity() {
         val list = findViewById<LinearLayout>(R.id.list)
         findViewById<TextView>(R.id.title).text = journals[0].disciplineId
         for(journal in journals) {
+            var string = ""
+            for(appr in journal.appraisalList) {
+                string += "${getDateString(appr.date)}:\n" +
+                        "\t\t${appr.reason},\n" +
+                        "\t\tоценка - ${appr.value}\n"
+            }
             list.addView(InfoCardView(this,"${journal.fourth} четверть",
-                "Оценки ${journal.appraisalList}"))
+                "Оценки:\n$string"))
         }
 
     }
