@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Моя школа</string>
     <string name="title_news">Новости</string>
-    <string name="title_schedule">Рассписание</string>
+    <string name="title_schedule">Расписание</string>
     <string name="title_blog">Дневник</string>
     <string name="title_analytics">Аналитика</string>
     <string name="title_profile">Профиль</string>

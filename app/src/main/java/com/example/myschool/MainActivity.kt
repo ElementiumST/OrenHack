@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         uploadUtilsData()
         setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.uploadData("-MMAYvEdYdHO0prpnMZF", "0")
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -34,8 +38,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_news, R.id.navigation_schedule, R.id.navigation_blog))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.uploadData("-MM7fvCKgnVEDvqbvt8J", "0")
+
                 /*
         firebaseDatabase.getReference("utils").child("timeSet")
                 .setValue(listOf(

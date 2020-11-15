@@ -14,7 +14,9 @@ import com.google.firebase.database.ValueEventListener
 
 class MainViewModel : ViewModel() {
     val student = MutableLiveData<Student>()
+    val groupId = MutableLiveData<String>()
     fun uploadData(groupId: String, studentId: String) {
+        this.groupId.postValue(groupId)
         firebaseDatabase.getReference("groups").child(groupId).child("students").child(studentId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {

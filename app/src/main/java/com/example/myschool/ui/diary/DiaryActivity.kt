@@ -19,9 +19,8 @@ class DiaryActivity : AppCompatActivity() {
         for(journal in journals) {
             var string = ""
             for(appr in journal.appraisalList) {
-                string += "${getDateString(appr.date)}:\n" +
-                        "\t\t${appr.reason},\n" +
-                        "\t\tоценка - ${appr.value}\n"
+                string += "${getDateString(appr.date)}: оценка - ${appr.value}\n" +
+                        "${appr.reason},\n\n"
             }
             list.addView(InfoCardView(this,"${journal.fourth} четверть",
                 "Оценки:\n$string"))

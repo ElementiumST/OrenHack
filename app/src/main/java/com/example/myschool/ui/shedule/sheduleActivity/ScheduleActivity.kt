@@ -23,13 +23,18 @@ class ScheduleActivity : AppCompatActivity() {
         val lessonView = LessonView(this)
         lessonView.setData(lesson)
         list.addView(lessonView)
+        Log.e("TESTEST", lesson.teacherId)
         firebaseDatabase.getReference("teachers").child(lesson.teacherId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val teacher = snapshot.getValue(Teacher::class.java)
                     val teacherView = InfoCardView(
                         this@ScheduleActivity,
-                        "Учитель", "${teacher!!.lastName} ${teacher.firstName} ${teacher.middleName}\n${teacher.qualification}"
+                        "Учитель",
+                            teacher!!.lastName +
+                                " ${teacher.firstName}" +
+                                " ${teacher.middleName}\n" +
+                                teacher.qualification
                     )
                     list.addView(teacherView)
                 }
