@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myschool.data.model.*
 import com.example.myschool.data.model.accounts.Account
+import com.example.myschool.data.model.accounts.ParentAccount
 import com.example.myschool.data.model.accounts.StudentAccount
 import com.example.myschool.data.model.alalytics.Analytics
 import com.example.myschool.data.model.alalytics.Appraisal
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         if(account.accountType == 0) {
             val studentAccount = account as StudentAccount
             viewModel.uploadData(studentAccount)
+        }
+        else if(account.accountType == 2) {
+            val parentAccount = account as ParentAccount
+            viewModel.uploadData(parentAccount)
         }
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)

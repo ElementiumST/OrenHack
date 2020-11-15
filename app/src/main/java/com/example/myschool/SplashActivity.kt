@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.myschool.data.model.accounts.Account
+import com.example.myschool.data.model.accounts.ParentAccount
 import com.example.myschool.data.model.accounts.StudentAccount
 import com.example.myschool.data.utils.firebaseDatabase
 import com.google.firebase.database.DataSnapshot
@@ -21,6 +22,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         cash = getSharedPreferences("cashData", MODE_PRIVATE)
+
         if(cash.contains("AccountId") && cash.contains("AccountType")) {
             val accountId = cash.getString("AccountId", null)!!
             firebaseDatabase.getReference("auth").child(accountId).addListenerForSingleValueEvent(
@@ -29,7 +31,11 @@ class SplashActivity : AppCompatActivity() {
                         if(cash.getInt("AccountType", -1) == 0) {
                             val account  = snapshot.getValue(StudentAccount::class.java)
                             startMainActivity(account!!)
+                        } else if(cash.getInt("AccountType", -1) == 2) {
+                            val account  = snapshot.getValue(ParentAccount::class.java)
+                            startMainActivity(account!!)
                         }
+
                     }
 
                     override fun onCancelled(error: DatabaseError) {

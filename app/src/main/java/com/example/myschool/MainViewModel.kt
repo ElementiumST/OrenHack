@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myschool.data.model.Post
 import com.example.myschool.data.model.Student
+import com.example.myschool.data.model.accounts.ParentAccount
 import com.example.myschool.data.model.accounts.StudentAccount
 import com.example.myschool.data.model.alalytics.Analytics
 import com.example.myschool.data.model.alalytics.Journal
@@ -16,9 +17,14 @@ import com.google.firebase.database.ValueEventListener
 class MainViewModel : ViewModel() {
     val student = MutableLiveData<Student>()
     val groupId = MutableLiveData<String>()
+    fun uploadData(parentAccount: ParentAccount) {
+        uploadData(parentAccount.groupId, parentAccount.studentId)
+    }
     fun uploadData(studentAccount: StudentAccount) {
-        val groupId: String = studentAccount.groupId
-        val studentId: String = studentAccount.studentId
+        uploadData(studentAccount.groupId, studentAccount.studentId)
+    }
+    fun uploadData(groupId: String, studentId: String) {
+
         this.groupId.postValue(groupId)
         firebaseDatabase.getReference("groups").child(groupId).child("students").child(studentId)
             .addValueEventListener(object : ValueEventListener {
